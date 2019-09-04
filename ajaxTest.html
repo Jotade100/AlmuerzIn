@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+    <script>
+        $('#action-button').click(function() {
+            $.ajax({
+                url: 'https://meteoinfo.ml:12081/jm/foodapp/api/?action=list&object=comedor',
+                method: 'GET',
+                success: function(respuesta) {
+                    $('#info').append(respuesta.comedor);
+                },
+                error: function() {
+                    $('#info').append("No se ha podido obtener la información");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+        <button id="action-button">Comedores</button>
+        <div id="info"></div>
+        
+        
+</body>
+</html>
