@@ -1,30 +1,123 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
+<html> 
+	
+<head> 
+	<title> 
+		ajax() Métodos
+	</title> 
+	
+	<script src= 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
+	</script> 
+	
+	<script> 
+		$(document).ready(function() { 
+			$("li:parent").css("background-color", "green"); 
+		}); 
+	</script> 
+</head> 
 
-<html>
-<head>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous">
-    </script>
-    <script>
-        $('#action-button').click(function() {
-            $.ajax({
-                url: 'https://meteoinfo.ml:12081/jm/foodapp/api/?action=list&object=comedor',
-                method: 'GET',
-                success: function(respuesta) {
-                    $('#info').append(respuesta.comedor);
-                },
-                error: function() {
-                    $('#info').append("No se ha podido obtener la información");
-                }
-            });
-        });
-    </script>
-</head>
-<body>
-        <button id="action-button">Comedores</button>
-        <div id="info"></div>
-        
-        
-</body>
-</html>
+<body style="text-align:center;"> 
+
+	<h1 style="color:green"> 
+		Prueba de comedores 
+	</h1> 
+	
+	<h2> 
+		resultados 
+	</h2> 
+	
+	<h4 id="hlistar"></h4> 
+	
+	<button id="listarComedor">Listar Comedor</button> 
+    <button id="listarMenu">Listar Menú</button> 
+    <button id="listarUsuarios">Listar Usuarios</button> 
+    
+
+	<!-- Script to use ajax() method to 
+		add text content -->
+	<script> 
+		$(document).ready(function() { 
+			$("#listarComedor").click(function() { 
+				$.ajax({type: "GET",
+                        url: "https://meteoinfo.ml:12081/jm/foodapp/api/?action=list&object=comedor",
+                        contentType: "application/json",
+						success: function(result) { 
+					        $("#hlistar").html(JSON.stringify(result.comedor)); 
+				        },
+                        error: function(xhr, status, error) {
+                            console.log(XMLHttpRequest); 
+					        $("#hlistar").html("Resultado: " + status + " " + error + " " + xhr.status + " " + xhr.statusText+xhr.statusText); 
+				        }
+                }); 
+			});
+            $("#listarMenu").click(function() { 
+				$.ajax({type: "GET",
+                        url: "https://meteoinfo.ml:12081/jm/foodapp/api/?action=list&object=menu",
+                        contentType: "application/json",
+						success: function(result) { 
+					        $("#hlistar").html(JSON.stringify(result.menu)); 
+				        },
+                        error: function(xhr, status, error) {
+                            console.log(XMLHttpRequest); 
+					        $("#hlistar").html("Resultado: " + status + " " + error + " " + xhr.status + " " + xhr.statusText+xhr.statusText); 
+				        }
+                }); 
+			});
+            $("#listarUsuarios").click(function() { 
+				$.ajax({type: "GET",
+                        url: "https://meteoinfo.ml:12081/jm/foodapp/api/?action=list&object=usuario",
+                        contentType: "application/json",
+						success: function(result) { 
+					        $("#hlistar").html(JSON.stringify(result.usuario)); 
+				        },
+                        error: function(xhr, status, error) {
+                            console.log(XMLHttpRequest); 
+					        $("#hlistar").html("Resultado: " + status + " " + error + " " + xhr.status + " " + xhr.statusText+xhr.statusText); 
+				        }
+                }); 
+			});
+            function agregarAlgo(tabla, campos) {
+            $.ajax({type: "POST",
+                        url: "https://meteoinfo.ml:12081/jm/foodapp/api/?action=add&object="+tabla+"&",
+                        contentType: "application/json",
+						success: function(result) { 
+					        $("#hlistar").html(JSON.stringify(result.usuario)); 
+				        },
+                        error: function(xhr, status, error) {
+                            console.log(XMLHttpRequest); 
+					        $("#hlistar").html("Resultado: " + status + " " + error + " " + xhr.status + " " + xhr.statusText+xhr.statusText); 
+				        }
+                });
+            }
+            function editarAlgo(tabla, campos) {
+            $.ajax({type: "POST",
+                        url: "https://meteoinfo.ml:12081/jm/foodapp/api/?action=edit&object="+tabla+"&",
+                        contentType: "application/json",
+						success: function(result) { 
+					        $("#hlistar").html(JSON.stringify(result.usuario)); 
+				        },
+                        error: function(xhr, status, error) {
+                            console.log(XMLHttpRequest); 
+					        $("#hlistar").html("Resultado: " + status + " " + error + " " + xhr.status + " " + xhr.statusText+xhr.statusText); 
+				        }
+                });
+            }
+            function eliminarAlgo(tabla, identificador) {
+            $.ajax({type: "POST",
+                        url: "https://meteoinfo.ml:12081/jm/foodapp/api/?action=delete&object="+tabla+"/",
+                        contentType: "application/json",
+						success: function(result) { 
+					        $("#hlistar").html(JSON.stringify(result.usuario)); 
+				        },
+                        error: function(xhr, status, error) {
+                            console.log(XMLHttpRequest); 
+					        $("#hlistar").html("Resultado: " + status + " " + error + " " + xhr.status + " " + xhr.statusText+xhr.statusText); 
+				        }
+                });
+            }  
+		}); 
+	</script> 
+</body> 
+
+</html> 
